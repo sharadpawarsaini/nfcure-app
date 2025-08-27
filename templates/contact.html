@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Contact - NFCure Card{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p class="page-subtitle">We're here to help and answer any questions you might have</p>
+    </div>
+</div>
+
+<div class="contact-section">
+    <div class="container">
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>Have questions about NFCure Card? Need technical support? Want to partner with us? We'd love to hear from you.</p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-details">
+                            <h3>Email Support</h3>
+                            <p>support@nfcurecard.com</p>
+                            <small>Response within 24 hours</small>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h3>Emergency Hotline</h3>
+                            <p>1-800-NFCURE-1</p>
+                            <small>24/7 emergency support</small>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">💬</div>
+                        <div class="contact-details">
+                            <h3>Live Chat</h3>
+                            <p>Available on our website</p>
+                            <small>Mon-Fri, 9AM-6PM EST</small>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="contact-icon">🏢</div>
+                        <div class="contact-details">
+                            <h3>Headquarters</h3>
+                            <p>123 Healthcare Ave<br>Medical District, NY 10001</p>
+                            <small>By appointment only</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form-container">
+                <form class="contact-form">
+                    <h2>Send us a Message</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject" required>
+                            <option value="">Select a topic</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="support">Technical Support</option>
+                            <option value="partnership">Partnership</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="emergency">Emergency Issue</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Please describe your inquiry in detail..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="faq-section">
+    <div class="container">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-grid">
+            <div class="faq-item">
+                <h3>How secure is my medical information?</h3>
+                <p>We use bank-level encryption and comply with HIPAA regulations to ensure your medical data is completely secure and private.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Can I update my medical information?</h3>
+                <p>Yes, you can update your medical profile anytime through your dashboard. Changes are reflected immediately in your QR code.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What if I lose my QR code?</h3>
+                <p>You can regenerate your QR code anytime by logging into your account. We also recommend saving a digital copy.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is NFCure Card accepted by hospitals?</h3>
+                <p>We're partnered with over 500 healthcare facilities. The number is growing as more providers recognize the value of instant medical access.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

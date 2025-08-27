@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Register - NFCure Card{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h1>Create Account</h1>
+        <p class="auth-subtitle">Join NFCure Card to manage your medical information</p>
+        
+        <form method="POST" class="auth-form">
+        <form method="POST" class="auth-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="profile_picture">Profile Picture (Optional)</label>
+                <div class="file-upload-container">
+                    <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="file-input">
+                    <label for="profile_picture" class="file-upload-label">
+                        <span class="upload-icon">📷</span>
+                        <span class="upload-text">Choose Photo</span>
+                    </label>
+                    <div class="image-preview" id="imagePreview"></div>
+                </div>
+                <small>Supported formats: PNG, JPG, JPEG, GIF (Max 5MB)</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required minlength="8">
+                <small>Minimum 8 characters</small>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        
+        <div class="auth-footer">
+            <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

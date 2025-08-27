@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}QR Code - NFCure Card{% endblock %}
+
+{% block content %}
+<div class="qr-container">
+    <div class="qr-header">
+        <h1>Your Medical QR Code</h1>
+        <p>This QR code contains your essential medical information for emergency situations</p>
+    </div>
+    
+    <div class="qr-content">
+        <div class="qr-card">
+            <div class="qr-code-section">
+                <div class="qr-code-container">
+                    <img src="data:image/png;base64,{{ qr_code }}" alt="Medical QR Code" class="qr-code-image">
+                </div>
+                <div class="qr-actions">
+                    <button onclick="downloadQR()" class="btn btn-primary">Download QR Code</button>
+                    <button onclick="printQR()" class="btn btn-secondary">Print QR Code</button>
+                </div>
+            </div>
+            
+            <div class="medical-summary">
+                <h2>Medical Information Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <strong>Name:</strong> {{ medical_data.name }}
+                    </div>
+                    <div class="summary-item">
+                        <strong>Blood Group:</strong> {{ medical_data.blood_group }}
+                    </div>
+                    <div class="summary-item">
+                        <strong>Emergency Contact:</strong> 
+                        {{ medical_data.emergency_contact.name }} - {{ medical_data.emergency_contact.phone }}
+                    </div>
+                    <div class="summary-item">
+                        <strong>Allergies:</strong> 
+                        {% if medical_data.allergies %}
+                            {{ medical_data.allergies | join(', ') }}
+                        {% else %}
+                            None specified
+                        {% endif %}
+                    </div>
+                    <div class="summary-item">
+                        <strong>Medical Conditions:</strong> 
+                        {% if medical_data.medical_conditions %}
+                            {{ medical_data.medical_conditions | join(', ') }}
+                        {% else %}
+                            None specified
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="qr-instructions">
+        <h2>How to Use Your QR Code</h2>
+        <div class="instructions-grid">
+            <div class="instruction-item">
+                <div class="instruction-icon">💾</div>
+                <h3>Save It</h3>
+                <p>Download and save the QR code to your phone's photo gallery for easy access.</p>
+            </div>
+            <div class="instruction-item">
+                <div class="instruction-icon">🖨️</div>
+                <h3>Print It</h3>
+                <p>Print the QR code and keep it in your wallet, car, or emergency kit.</p>
+            </div>
+            <div class="instruction-item">
+                <div class="instruction-icon">📱</div>
+                <h3>Share It</h3>
+                <p>Share with family members and caregivers who might need access in emergencies.</p>
+            </div>
+            <div class="instruction-item">
+                <div class="instruction-icon">🔄</div>
+                <h3>Update It</h3>
+                <p>Generate a new QR code whenever you update your medical information.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function downloadQR() {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = document.querySelector('.qr-code-image');
+    
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    ctx.drawImage(img, 0, 0);
+    
+    const link = document.createElement('a');
+    link.download = 'nfcure-medical-qr-code.png';
+    link.href = canvas.toDataURL();
+    link.click();
+}
+
+function printQR() {
+    const printWindow = window.open('', '_blank');
+    const qrImage = document.querySelector('.qr-code-image').src;
+    const medicalData = {{ medical_data | tojson }};
+    
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>NFCure Medical QR Code</title>
+                <style>
+                    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+                    .qr-print { max-width: 300px; margin: 20px auto; }
+                    .medical-info { text-align: left; margin-top: 20px; }
+                    .medical-info h3 { color: #2563eb; }
+                    @media print { body { margin: 0; } }
+                </style>
+            </head>
+            <body>
+                <h1>NFCure Medical QR Code</h1>
+                <div class="qr-print">
+                    <img src="${qrImage}" style="width: 100%; height: auto;">
+                </div>
+                <div class="medical-info">
+                    <h3>Emergency Medical Information</h3>
+                    <p><strong>Name:</strong> ${medicalData.name}</p>
+                    <p><strong>Blood Group:</strong> ${medicalData.blood_group}</p>
+                    <p><strong>Emergency Contact:</strong> ${medicalData.emergency_contact.name} - ${medicalData.emergency_contact.phone}</p>
+                    <p><strong>Allergies:</strong> ${medicalData.allergies.join(', ') || 'None'}</p>
+                    <p><strong>Medical Conditions:</strong> ${medicalData.medical_conditions.join(', ') || 'None'}</p>
+                </div>
+                <p style="margin-top: 30px; font-size: 12px; color: #666;">
+                    Generated by NFCure Card - www.nfcurecard.com
+                </p>
+            </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+}
+</script>
+{% endblock %}

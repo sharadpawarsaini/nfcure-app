@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - NFCure Card{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <header class="dashboard-header">
+        <h1>Medical Profile</h1>
+        <p>Manage your medical information for emergency situations</p>
+    </header>
+    
+    <div class="dashboard-content">
+        <!-- Current Profile Display -->
+        {% if profile %}
+        <div class="profile-display">
+            <h2>Current Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Blood Group:</strong> {{ profile.blood_group }}
+                </div>
+                <div class="info-item">
+                    <strong>Emergency Contact:</strong> 
+                    {{ profile.emergency_contact.name }} - {{ profile.emergency_contact.phone }}
+                </div>
+                <div class="info-item">
+                    <strong>Allergies:</strong> 
+                    {% if profile.allergies %}
+                        {{ profile.allergies | join(', ') }}
+                    {% else %}
+                        None specified
+                    {% endif %}
+                </div>
+                <div class="info-item">
+                    <strong>Medical Conditions:</strong> 
+                    {% if profile.medical_conditions %}
+                        {{ profile.medical_conditions | join(', ') }}
+                    {% else %}
+                        None specified
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Profile Form -->
+        <div class="profile-form">
+            <h2>{% if profile %}Update{% else %}Create{% endif %} Medical Profile</h2>
+            
+            <form method="POST" action="{{ url_for('medical.update_profile') }}">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="blood_group">Blood Group *</label>
+                        <select id="blood_group" name="blood_group" required>
+                            <option value="">Select Blood Group</option>
+                            <option value="A+" {% if profile and profile.blood_group == 'A+' %}selected{% endif %}>A+</option>
+                            <option value="A-" {% if profile and profile.blood_group == 'A-' %}selected{% endif %}>A-</option>
+                            <option value="B+" {% if profile and profile.blood_group == 'B+' %}selected{% endif %}>B+</option>
+                            <option value="B-" {% if profile and profile.blood_group == 'B-' %}selected{% endif %}>B-</option>
+                            <option value="AB+" {% if profile and profile.blood_group == 'AB+' %}selected{% endif %}>AB+</option>
+                            <option value="AB-" {% if profile and profile.blood_group == 'AB-' %}selected{% endif %}>AB-</option>
+                            <option value="O+" {% if profile and profile.blood_group == 'O+' %}selected{% endif %}>O+</option>
+                            <option value="O-" {% if profile and profile.blood_group == 'O-' %}selected{% endif %}>O-</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="emergency_name">Emergency Contact Name *</label>
+                        <input type="text" id="emergency_name" name="emergency_name" 
+                               value="{% if profile and profile.emergency_contact %}{{ profile.emergency_contact.name }}{% endif %}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emergency_phone">Emergency Contact Phone *</label>
+                        <input type="tel" id="emergency_phone" name="emergency_phone" 
+                               value="{% if profile and profile.emergency_contact %}{{ profile.emergency_contact.phone }}{% endif %}" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="allergies">Allergies</label>
+                    <input type="text" id="allergies" name="allergies" 
+                           value="{% if profile and profile.allergies %}{{ profile.allergies | join(', ') }}{% endif %}"
+                           placeholder="Enter allergies separated by commas (e.g., Penicillin, Nuts, Shellfish)">
+                    <small>Separate multiple allergies with commas</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="medical_conditions">Medical Conditions</label>
+                    <input type="text" id="medical_conditions" name="medical_conditions" 
+                           value="{% if profile and profile.medical_conditions %}{{ profile.medical_conditions | join(', ') }}{% endif %}"
+                           placeholder="Enter medical conditions separated by commas (e.g., Diabetes, Hypertension)">
+                    <small>Separate multiple conditions with commas</small>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    {% if profile %}Update Profile{% else %}Create Profile{% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Home - NFCure Card{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Your Medical Information, Always Accessible</h1>
+        <p class="hero-subtitle">NFCure Card revolutionizes emergency medical care by making your critical health information instantly available through QR code technology.</p>
+        <div class="hero-buttons">
+            {% if not session.user_id %}
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-large">Get Started</a>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-secondary btn-large">Sign In</a>
+            {% else %}
+                <a href="{{ url_for('medical.dashboard') }}" class="btn btn-primary btn-large">View Dashboard</a>
+                <a href="{{ url_for('medical.generate_qr') }}" class="btn btn-secondary btn-large">Generate QR Code</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="hero-image">
+        <div class="medical-card-demo">
+            <div class="card-front">
+                <h3>NFCure Card</h3>
+                <div class="qr-placeholder"></div>
+                <p>Scan for Medical Info</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="features-section">
+    <div class="container">
+        <h2 class="section-title">Why Choose NFCure Card?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🚑</div>
+                <h3>Emergency Ready</h3>
+                <p>Instant access to critical medical information when every second counts in emergency situations.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>QR Code Technology</h3>
+                <p>Simply scan the QR code to access complete medical history, allergies, and emergency contacts.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Secure & Private</h3>
+                <p>Your medical data is encrypted and securely stored, accessible only when you need it most.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>Always Available</h3>
+                <p>Access your medical profile from anywhere, anytime, even without internet connectivity.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cta-section">
+    <div class="container">
+        <h2>Ready to Secure Your Medical Information?</h2>
+        <p>Join thousands of users who trust NFCure Card with their medical data.</p>
+        {% if not session.user_id %}
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-large">Create Your Profile</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
